@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz 20 anos, Yasmin!</title>
+  <meta name="description" content="Uma surpresa de aniversário para a Yasmin, com carinho do Henriq.">
+  <meta name="theme-color" content="#4a0d20">
+
+  <!-- ÂNCORA: prévia do link no WhatsApp. Depois de publicar, troque o og:image pelo endereço completo (https://seu-site.vercel.app/fotos/foto5.jpg) se a foto não aparecer -->
+  <meta property="og:title" content="Feliz 20 anos, Yasmin! 🍷">
+  <meta property="og:description" content="Tenho uma dedução sobre você: abriu esse link sorrindo. Um presente te espera aqui.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="fotos/foto5.jpg">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ÂNCORA: canvas do confete fica fixo atrás de todo o conteúdo -->
+  <canvas id="confete" aria-hidden="true"></canvas>
+
+  <!-- ===== NÍVEL FÁCIL: abertura ===== -->
+  <header class="hero">
+    <!-- ÂNCORA: retrato redondo no topo (redondo e pequeno para a foto não ficar borrada) -->
+    <img class="hero-foto" src="fotos/foto5.jpg" alt="Yasmin">
+
+    <p class="selo">🔒 Mensagem confidencial · Destinatária: Yasmin</p>
+
+    <h1>Feliz <span class="vinte">20</span> anos,<br>Yasmin!</h1>
+
+    <!-- ÂNCORA: o JS troca o texto desta frase a cada poucos segundos -->
+    <p id="frase" class="frase" aria-live="polite"></p>
+
+    <!-- ÂNCORA: contagem regressiva até 00:00 do dia 25 (o JS preenche este bloco) -->
+    <div id="contagem" class="contagem" role="timer"></div>
+
+    <div class="taca" aria-hidden="true">🍷</div>
+
+    <button id="btnPresente" class="btn-presente" type="button">
+      <span class="icone">🎁</span>
+      <span class="texto">Abrir meu presente</span>
+    </button>
+  </header>
+
+  <main>
+
+    <!-- ===== Carta (começa escondida; o botão revela) ===== -->
+    <section id="carta" class="secao oculta" aria-labelledby="titulo-carta">
+      <article class="carta">
+        <h2 id="titulo-carta">Yasmin, esse brinde é pra você 🍷</h2>
+
+        <p>Tudo começou num 4 de março, na Chocofleur, no meio da correria do trabalho. Eu não sabia, mas ali nascia uma das amizades mais importantes que eu tenho.</p>
+
+        <p>A gente se via todo dia: rindo, brincando, trabalhando e passando aperto junto, porque teve momento difícil também, né? E mesmo assim a gente aprendeu a se apoiar. Quando o trabalho acabou, a amizade ficou.</p>
+
+        <p>Teve a terça do rock, lembra? A gente indo ouvir um som, rindo à toa, e teve aquela hora em que você se abriu comigo. Fiquei muito feliz de você confiar em mim. Teve festa, teve rolê, e teve cuidado: você já cuidou de mim, eu já cuidei de você. Amizade é isso.</p>
+
+        <p class="destaque">Eu tenho muito orgulho da sua batalha. Você é guerreira demais: tão nova, enfrentando tanta coisa e mesmo assim de pé, trabalhando, com seus sonhos e suas ambições. Isso não é pouca coisa, não.</p>
+
+        <p>Desejo que esses 20 anos sejam só o começo: que você conquiste tudo o que sonha, que a vida seja generosa com você e que sobre muita felicidade. E pode contar comigo, sempre, com conselho, ombro amigo e rock.</p>
+
+        <p class="assinatura">Com carinho,<br><strong>Henriq</strong></p>
+        <p class="ps">P.S. Eu já sabia que você ia se emocionar um pouquinho. 😉</p>
+      </article>
+    </section>
+
+    <!-- ===== NÍVEL MÉDIO: galeria de memórias ===== -->
+    <section id="memorias" class="secao oculta" aria-labelledby="titulo-memorias">
+      <h2 id="titulo-memorias" class="titulo-secao">Nossas memórias</h2>
+
+      <div class="galeria">
+        <figure class="polaroid">
+          <img src="fotos/foto1.jpg" alt="Selfie no espelho com o sinal do rock, Yasmin sorrindo ao fundo" loading="lazy">
+          <figcaption>Rock no espelho, risada garantida 🤘</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img src="fotos/foto2.jpg" alt="Selfie no espelho de bandana e sinal do rock, Yasmin sorrindo atrás" loading="lazy">
+          <figcaption>Cara de mau, coração mole</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img src="fotos/foto3.jpg" alt="Selfie no espelho de fone de ouvido, Yasmin rindo ao fundo" loading="lazy">
+          <figcaption>Eu posando, ela rindo de tudo ao fundo</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img src="fotos/foto4.jpg" alt="Montagem de stories com a legenda: a lenda, lá atrás toda borrada" loading="lazy">
+          <figcaption>Registro histórico: a lenda lá atrás 😂</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img src="fotos/foto5.jpg" alt="Selfie da Yasmin fazendo biquinho" loading="lazy">
+          <figcaption>Biquinho oficial da Yasmin 😘</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== NÍVEL MÉDIO: vídeos (capa gerada do próprio vídeo) ===== -->
+    <section id="videos" class="secao oculta" aria-labelledby="titulo-videos">
+      <h2 id="titulo-videos" class="titulo-secao">Em movimento 🎬</h2>
+      <p class="legenda-secao">Toque no play para reviver.</p>
+
+      <div class="galeria-video">
+        <figure class="cartao-video">
+          <video controls playsinline preload="metadata" poster="videos/capa1.jpg" src="videos/video1.mp4"></video>
+          <figcaption>Trilha sonora do intervalo 🎮</figcaption>
+        </figure>
+        <figure class="cartao-video">
+          <video controls playsinline preload="metadata" poster="videos/capa2.jpg" src="videos/video2.mp4"></video>
+          <figcaption>Vencemos! Com Bon Jovi no fundo 🤘</figcaption>
+        </figure>
+        <figure class="cartao-video">
+          <video controls playsinline preload="metadata" poster="videos/capa3.jpg" src="videos/video3.mp4"></video>
+          <figcaption>O dia da aura perdida (sem julgamentos 😅)</figcaption>
+        </figure>
+        <figure class="cartao-video">
+          <video controls playsinline preload="metadata" poster="videos/capa4.jpg" src="videos/video4.mp4"></video>
+          <figcaption>Que saudades dessa época 🥹</figcaption>
+        </figure>
+        <figure class="cartao-video">
+          <video controls playsinline preload="metadata" poster="videos/capa5.jpg" src="videos/video5.mp4"></video>
+          <figcaption>O especial dela, no final ✨</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===== NÍVEL MÉDIO: trilha sonora ===== -->
+    <section id="rock" class="secao oculta" aria-labelledby="titulo-rock">
+      <h2 id="titulo-rock" class="titulo-secao">Trilha da noite 🎸</h2>
+      <p class="legenda-secao">Aperte o play e deixe o rock rolar.</p>
+      <audio id="musica" controls preload="none" src="audio/musica.mp3">
+        Seu navegador não suporta áudio.
+      </audio>
+    </section>
+
+  </main>
+
+  <footer class="rodape">
+    <p>Feito com carinho pelo Henriq · 🍷 Saúde, Yasmin!</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

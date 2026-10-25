@@ -1,0 +1,348 @@
+/* ============================================
+   NÍVEL FÁCIL: variáveis, reset e base
+   ============================================ */
+:root {
+  --noite: #1c0710;
+  --bordo: #4a0d20;
+  --vinho: #7b1530;
+  --rubi: #a3203f;
+  --ouro: #e0b872;
+  --creme: #f8eddc;
+  --vidro: rgba(255, 255, 255, 0.07);
+  --borda: rgba(224, 184, 114, 0.35);
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --fonte-texto: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  font-family: var(--fonte-texto);
+  color: var(--creme);
+  line-height: 1.7;
+  background:
+    radial-gradient(ellipse at top, var(--vinho) 0%, var(--bordo) 45%, var(--noite) 100%)
+    fixed;
+  overflow-x: hidden;
+}
+
+/* ÂNCORA: canvas cobre a tela toda, mas não bloqueia cliques */
+#confete {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ============================================
+   Hero (abertura)
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.4rem;
+  padding: 2rem 1.2rem;
+}
+
+.selo {
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ouro);
+  border: 1px solid var(--borda);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--vidro);
+}
+
+/* Retrato da Yasmin com anel dourado */
+.hero-foto {
+  width: clamp(110px, 28vw, 170px);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--ouro);
+  box-shadow: 0 0 0 7px rgba(224, 184, 114, 0.18), 0 14px 40px rgba(0, 0, 0, 0.55);
+  animation: surgir 1s ease both;
+}
+
+/* ÂNCORA: em celulares baixos, esconde a taça para o botão continuar visível sem rolar */
+@media (max-height: 760px) {
+  .taca { display: none; }
+  .hero { gap: 1rem; }
+}
+
+.hero h1 {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(2.4rem, 9vw, 5rem);
+  line-height: 1.1;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.vinte {
+  color: var(--ouro);
+  font-style: italic;
+  display: inline-block;
+  animation: brilho 3s ease-in-out infinite;
+}
+
+.frase {
+  min-height: 3.4rem;
+  max-width: 34rem;
+  font-size: clamp(1rem, 3.5vw, 1.25rem);
+  font-style: italic;
+  color: var(--creme);
+  opacity: 0.95;
+  transition: opacity 0.6s ease;
+}
+.frase.some { opacity: 0; }
+
+.taca {
+  font-size: 4rem;
+  animation: balanco 3.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* ============================================
+   Botão do presente
+   ============================================ */
+.btn-presente {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--noite);
+  background: linear-gradient(135deg, var(--ouro), #f3d9a4);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(224, 184, 114, 0.35);
+  animation: pulo 2s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-presente:hover { transform: scale(1.06); box-shadow: 0 10px 40px rgba(224, 184, 114, 0.55); }
+.btn-presente:focus-visible { outline: 3px solid var(--creme); outline-offset: 4px; }
+.btn-presente .icone { font-size: 1.5rem; }
+.btn-presente.aberto { animation: none; opacity: 0.75; cursor: default; }
+
+/* ============================================
+   Seções reveladas
+   ============================================ */
+.secao {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 3rem 1.2rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* ÂNCORA: classe .oculta é removida pelo JS ao abrir o presente */
+.secao.oculta { display: none; }
+.secao.revelada { animation: surgir 1s ease both; }
+
+.titulo-secao {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(1.7rem, 5vw, 2.4rem);
+  text-align: center;
+  color: var(--ouro);
+  margin-bottom: 0.4rem;
+}
+.legenda-secao { text-align: center; margin-bottom: 1.5rem; opacity: 0.85; }
+
+/* ============================================
+   Carta (efeito vidro fosco)
+   ============================================ */
+.carta {
+  background: var(--vidro);
+  border: 1px solid var(--borda);
+  border-radius: 1.4rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.carta h2 {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(1.5rem, 5vw, 2.1rem);
+  color: var(--ouro);
+  margin-bottom: 1.4rem;
+}
+
+.carta p { margin-bottom: 1.1rem; font-size: 1.05rem; }
+
+.carta .destaque {
+  border-left: 4px solid var(--ouro);
+  padding: 0.4rem 0 0.4rem 1.1rem;
+  font-family: var(--fonte-titulo);
+  font-size: 1.2rem;
+  font-style: italic;
+}
+
+.assinatura { margin-top: 1.8rem; text-align: right; font-family: var(--fonte-titulo); }
+.assinatura strong { color: var(--ouro); font-size: 1.4rem; }
+.ps { text-align: right; font-size: 0.9rem !important; opacity: 0.8; }
+
+/* ============================================
+   NÍVEL MÉDIO: galeria com Grid
+   ============================================ */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.8rem;
+  margin-top: 1.5rem;
+}
+
+.polaroid {
+  background: var(--creme);
+  color: var(--noite);
+  padding: 0.8rem 0.8rem 1rem;
+  border-radius: 6px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  transition: transform 0.3s ease;
+}
+.polaroid:nth-child(odd)  { transform: rotate(-2.5deg); }
+.polaroid:nth-child(even) { transform: rotate(2.5deg); }
+.polaroid:hover { transform: rotate(0) scale(1.05); }
+
+.polaroid img, .polaroid .vazio {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 3px;
+  background: #e5d3b8;
+}
+
+/* Espaço reservado quando a foto ainda não foi colocada */
+.polaroid .vazio {
+  display: grid;
+  place-items: center;
+  font-size: 2.6rem;
+  color: var(--rubi);
+}
+
+.polaroid figcaption {
+  margin-top: 0.7rem;
+  text-align: center;
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+}
+
+/* ============================================
+   NÍVEL MÉDIO: contagem regressiva
+   ============================================ */
+.contagem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  min-height: 5rem; /* reserva a altura para a página não "pular" quando o JS preenche */
+}
+
+.tempo {
+  min-width: 4.6rem;
+  padding: 0.6rem 0.4rem;
+  background: var(--vidro);
+  border: 1px solid var(--borda);
+  border-radius: 0.9rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.tempo strong {
+  display: block;
+  font-family: var(--fonte-titulo);
+  font-size: 1.8rem;
+  line-height: 1.1;
+  color: var(--ouro);
+  font-variant-numeric: tabular-nums; /* números do mesmo tamanho: o relógio não "treme" */
+}
+
+.tempo span {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.contagem .hoje {
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: clamp(1.3rem, 5vw, 1.9rem);
+  color: var(--ouro);
+  animation: brilho 3s ease-in-out infinite;
+}
+
+/* ============================================
+   NÍVEL MÉDIO: vídeos em Grid
+   ============================================ */
+.galeria-video {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.6rem;
+  margin-top: 1.5rem;
+}
+
+.cartao-video {
+  background: var(--vidro);
+  border: 1px solid var(--borda);
+  border-radius: 1rem;
+  padding: 0.7rem 0.7rem 1rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* ÂNCORA: 9/16 mantém o formato de vídeo de celular sem esticar */
+.cartao-video video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: contain;
+  background: #000;
+  border-radius: 0.6rem;
+}
+
+.cartao-video figcaption {
+  margin-top: 0.7rem;
+  text-align: center;
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+}
+
+/* ============================================
+   Player de música
+   ============================================ */
+#rock { text-align: center; }
+/* Se o JS avisar que a música não existe, a seção some sozinha */
+#rock[data-sem-musica="true"] { display: none; }
+#musica { width: min(100%, 28rem); border-radius: 999px; }
+
+/* ============================================
+   Rodapé
+   ============================================ */
+.rodape { text-align: center; padding: 2.5rem 1rem 3rem; opacity: 0.8; position: relative; z-index: 2; }
+
+/* ============================================
+   Animações
+   ============================================ */
+@keyframes balanco { 0%, 100% { transform: rotate(-12deg); } 50% { transform: rotate(12deg); } }
+@keyframes pulo    { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes brilho  { 0%, 100% { text-shadow: 0 0 10px rgba(224,184,114,.3); } 50% { text-shadow: 0 0 30px rgba(224,184,114,.9); } }
+@keyframes surgir  { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
